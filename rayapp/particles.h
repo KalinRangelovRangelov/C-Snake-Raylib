@@ -3,6 +3,8 @@
 
 #include <raylib.h>
 
+// ChatGPT generated code
+
 #define MAX_PARTICLES 10
 
 typedef struct {
