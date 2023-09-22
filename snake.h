@@ -46,36 +46,36 @@ void snake_init(int x, int y, DIR dir) {
 }
 
 void snake_release() {
-	Snake *track = snake_head;
-	while(track != NULL) {
-		Snake *segment = track;
-		track = track->next;
+	Snake *snake = snake_head;
+	while(snake != NULL) {
+		Snake *segment = snake;
+		snake = snake->next;
 		free(segment);
 	}
 }
 
 void snake_move() {
-	Snake *track = snake_head;
-	int save_x = track->x;
-	int save_y = track->y; 
-	DIR save_dir = track->dir;
+	Snake *snake = snake_head;
+	int save_x = snake->x;
+	int save_y = snake->y; 
+	DIR save_dir = snake->dir;
 	
-	switch(track->dir) {
-		case UP: 	track->y--; break; 
-		case DOWN: 	track->y++; break; 
-		case LEFT: 	track->x--; break; 
-		case RIGHT: track->x++; break;
+	switch(snake->dir) {
+		case UP: 	snake->y--; break; 
+		case DOWN: 	snake->y++; break; 
+		case LEFT: 	snake->x--; break; 
+		case RIGHT: snake->x++; break;
 	}
 	
-	while(track->next != NULL) {
-		int x = track->next->x; 
-		int y = track->next->y;
-		DIR dir = track->next->dir;	
+	while(snake->next != NULL) {
+		int x = snake->next->x; 
+		int y = snake->next->y;
+		DIR dir = snake->next->dir;	
 		
-		track = track->next;
-		track->x = save_x;
-		track->y = save_y;
-		track->dir = save_dir;
+		snake = snake->next;
+		snake->x = save_x;
+		snake->y = save_y;
+		snake->dir = save_dir;
 		
 		save_x = x;
 		save_y = y;
@@ -88,12 +88,12 @@ void snake_grow() {
 	int save_y;
 	DIR save_dir;
 
-	Snake *track = snake_head;
-	while(track != NULL) {
-		save_x = track->x;
-		save_y = track->y;
-		save_dir = track->dir;
-		track = track->next;
+	Snake *snake = snake_head;
+	while(snake != NULL) {
+		save_x = snake->x;
+		save_y = snake->y;
+		save_dir = snake->dir;
+		snake = snake->next;
 	}
 	
 	switch(save_dir) {
@@ -103,16 +103,16 @@ void snake_grow() {
 		case RIGHT: save_x--; break;
 	}
 	
-	track = snake_head;
-	while(track->next != NULL) {
-		track = track->next;
+	snake = snake_head;
+	while(snake->next != NULL) {
+		snake = snake->next;
 	}
 	
 	Snake *newSegment = malloc(sizeof(Snake));
 	newSegment->x = save_x; 
 	newSegment->y = save_y; 
 	newSegment->dir = save_dir; 
-	track->next = newSegment;
+	snake->next = newSegment;
 }
 
 bool snake_detect_apple() {
@@ -121,12 +121,12 @@ bool snake_detect_apple() {
 }
 
 bool snake_detect_body_collision() {
-	Snake *track = snake_head->next;
-	while(track != NULL) {
-		if(track->x == snake_head->x && track->y == snake_head->y) {
+	Snake *snake = snake_head->next;
+	while(snake != NULL) {
+		if(snake->x == snake_head->x && snake->y == snake_head->y) {
 			return true;
 		}
-		track = track->next;
+		snake = snake->next;
 	}
 	return false;
 }

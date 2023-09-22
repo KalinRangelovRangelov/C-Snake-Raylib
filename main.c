@@ -41,10 +41,10 @@ void draw_grid() {
 }
 
 void draw_snake() {
-	Snake *track = snake_head;
-	while(track != NULL) {
-		DrawRectangle(track->x * SCALE + START_X, track->y * SCALE + START_Y, SCALE, SCALE, SNAKE_COLOR);
-		track = track->next;
+	Snake *snake = snake_head;
+	while(snake != NULL) {
+		DrawRectangle(snake->x * SCALE + START_X, snake->y * SCALE + START_Y, SCALE, SCALE, SNAKE_COLOR);
+		snake = snake->next;
 	}
 }
 
