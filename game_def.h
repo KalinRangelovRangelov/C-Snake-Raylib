@@ -31,9 +31,6 @@ Game game = {
 	
 };
 
-#ifndef GAME_DEF_IMPLEMENTATION
-#define GAME_DEF_IMPLEMENTATION
-
 void game_init(int grid_size, float snake_speed) {
 	game.grid_size = grid_size;
 	game.snake_speed = snake_speed;
@@ -63,7 +60,5 @@ void game_draw() {
 	game.renderer.draw();
 }
 
-
-#endif // GAME_DEF_IMPLEMENTATION
 
 #endif // GAME_DEF_H
