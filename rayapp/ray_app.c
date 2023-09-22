@@ -31,7 +31,7 @@ int main(void) {
 			ClearBackground(BACKGROUND_COLOR);
 			game.handle_input();
 			game.update(&last_time_frame, GetTime());
-			renderer.draw(game.score); 	
+			renderer.draw(game.score, game.best_score); 	
 		EndDrawing();
 	}
 	

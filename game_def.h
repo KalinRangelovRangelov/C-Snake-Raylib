@@ -14,6 +14,7 @@ typedef struct {
 	int grid_size;
 	float snake_speed;
 	int score;
+	int best_score;
 
 	void (*init)(int grid_size, float snake_speed);
 	void (*end)();
@@ -31,13 +32,15 @@ Game game = {
 void game_init(int grid_size, float snake_speed) {
 	game.grid_size = grid_size;
 	game.snake_speed = snake_speed;
-	game.score = 0;
 	int center = grid_size / 2;
 	snake_init(center, center, UP);
 	apple_generate(grid_size, grid_size);
 }
 
 void game_end() {
+	if(game.best_score < game.score) {
+		game.best_score = game.score;
+	}
 	game.score = 0;
 	snake_release();
 	game.init(game.grid_size, game.snake_speed);

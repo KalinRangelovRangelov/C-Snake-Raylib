@@ -1,11 +1,11 @@
 #ifndef RENDERER_DEF_H
 #define RENDERER_DEF_H
 
-void renderer_draw(int score);
+void renderer_draw(int score, int best_score);
 
 
 typedef struct {
-	void (*draw)(int score);
+	void (*draw)(int score, int best_score);
 } Renderer;
 
 Renderer renderer = {	

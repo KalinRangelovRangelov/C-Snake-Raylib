@@ -1,6 +1,7 @@
 #ifndef RAY_RENDERER_H
 #define RAY_RENDERER_H
 
+#include <string.h>
 #include <raylib.h>
 
 #include "../snake.h"
@@ -11,6 +12,7 @@
 #define SNAKE_COLOR GREEN
 #define APPLE_COLOR RED
 #define SCORE_COLOR GREEN
+#define BEST_SCORE_COLOR YELLOW
 
 
 
@@ -46,17 +48,23 @@ void draw_apple() {
 	DrawRectangle(x, y, SCALE, SCALE, APPLE_COLOR);
 }
 
-void draw_score(int score) {
-	char scoreText[80];
-	sprintf(scoreText, "Score: %d", score);
-	DrawText(scoreText, 20, 10, 20, SCORE_COLOR);
+void draw_score(int score, int best_score) {
+	char score_text[17];
+	sprintf(score_text, "Score: %d", score);
+	DrawText(score_text, GRID_OFFSET, 15, 20, SCORE_COLOR);
+	
+	char best_text[17];
+	sprintf(best_text, "Best: %d", best_score);
+	size_t best_count = strlen(best_text);
+	size_t x = SCREEN_WIDTH - GRID_OFFSET - (best_count * 15);
+	DrawText(best_text, x, 15, 20, BEST_SCORE_COLOR);
 }
 
-void renderer_draw(int score) {
+void renderer_draw(int score, int best_score) {
 	draw_grid();
 	draw_apple();
 	draw_snake();
-	draw_score(score);
+	draw_score(score, best_score);
 }
 
 #endif // RAY_RENDERER_H
