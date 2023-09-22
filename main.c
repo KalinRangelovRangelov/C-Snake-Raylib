@@ -57,17 +57,7 @@ void game_draw() {
 	draw_score();
 }
 
-void game_update(double *last_time_frame, double current_time_frame) {
-	double time_frame = GetTime();
-	if(time_frame > *last_time_frame + game.snake_speed) {
-		snake_move();
-		detect_apple(game.grid_size);
-		if(detect_collision(game.grid_size)) {
-			game_end();
-		}
-		*last_time_frame = current_time_frame;
-	}
-}
+
 
 
 void game_handle_input() {

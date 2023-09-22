@@ -10,7 +10,7 @@ void game_update(double *last_time_frame, double current_time_frame);
 void game_handle_input();
 
 
-typedef struct game {
+typedef struct {
 	int grid_size;
 	float snake_speed;
 
@@ -47,6 +47,17 @@ void game_end() {
 	score = 0;
 	snake_release();
 	game_init(game.grid_size, game.snake_speed);
+}
+
+void game_update(double *last_time_frame, double current_time_frame) {
+	if(current_time_frame > *last_time_frame + game.snake_speed) {
+		snake_move();
+		detect_apple(game.grid_size);
+		if(detect_collision(game.grid_size)) {
+			game_end();
+		}
+		*last_time_frame = current_time_frame;
+	}
 }
 
 
