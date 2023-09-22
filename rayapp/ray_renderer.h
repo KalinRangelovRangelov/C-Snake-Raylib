@@ -6,6 +6,12 @@
 #include "../snake.h"
 #include "../consts.h"
 
+#define GRID_COLOR LIGHTGRAY
+#define SNAKE_COLOR GREEN
+#define APPLE_COLOR RED
+#define SCORE_COLOR LIME
+
+
 void draw_grid() {
 	for(size_t x = 0; x < SCREEN_WIDTH; ++x) {
 		size_t x_scale = x * SCALE;
@@ -33,7 +39,7 @@ void draw_apple() {
 void draw_score() {
 	char scoreText[80];
 	sprintf(scoreText, "Score: %d", score);
-	DrawText(scoreText, 20, 10, 20, BLACK);
+	DrawText(scoreText, 20, 10, 20, SCORE_COLOR);
 }
 
 void renderer_draw() {

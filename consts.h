@@ -9,10 +9,6 @@
 #define START_X 0
 #define START_Y SCREEN_HEIGHT - SCREEN_WIDTH
 
-#define GRID_COLOR GRAY
-#define SNAKE_COLOR LIGHTGRAY
-#define APPLE_COLOR RED
-
 #define SNAKE_SPEED 0.16f
 
 

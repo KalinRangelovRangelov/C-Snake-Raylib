@@ -7,7 +7,7 @@
 #include "game_def.h"
 #include "consts.h"
 
-
+#define BACKGROUND_COLOR (Color){ 70, 70, 120, 244 }
 
 void game_handle_input() {
 	if     (IsKeyDown(KEY_W) || IsKeyDown(KEY_UP))	  snake_head->dir = UP;
@@ -24,7 +24,7 @@ int main(void) {
 	double last_time_frame = GetTime();
 	while(!WindowShouldClose()) {
 		BeginDrawing();
-			ClearBackground(RAYWHITE);
+			ClearBackground(BACKGROUND_COLOR);
 			game.handle_input();
 			game.update(&last_time_frame, GetTime());
 			renderer.draw(); 			
