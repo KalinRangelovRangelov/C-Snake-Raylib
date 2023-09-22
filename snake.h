@@ -26,7 +26,6 @@ typedef struct snake {
 
 Snake *snake_head;
 Apple apple;
-int score = 0;
 
 void snake_init(int x, int y, DIR dir);
 void snake_release();
@@ -35,7 +34,7 @@ void snake_grow();
 bool snake_detect_apple();
 bool snake_detect_body_collision();
 void apple_generate(int max_x, int max_y);
-void detect_apple(int grid_size);
+bool detect_apple(int grid_size);
 
 
 void snake_init(int x, int y, DIR dir) {
@@ -170,12 +169,13 @@ void apple_generate(int max_x, int max_y) {
 	}
 }
 
-void detect_apple(int grid_size) {
+bool detect_apple(int grid_size) {
 	if(snake_detect_apple()) {
 		snake_grow();
 		apple_generate(grid_size, grid_size);
-		score++;
+		return true; 
 	}
+	return false;
 }
 
 #endif // SNAKE_H

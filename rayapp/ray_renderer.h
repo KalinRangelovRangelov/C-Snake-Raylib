@@ -41,21 +41,22 @@ void draw_snake() {
 void draw_apple() {
 	int x = apple.x * SCALE + GRID_OFFSET;
 	int y = apple.y * SCALE + GRID_OFFSET;
-	Vector2 pos = {x, y};
-	DrawTextureEx(texture_loader.apple, pos, 0, texture_loader.apple_scale, WHITE);
+	//Vector2 pos = {x, y};
+	//DrawTextureEx(texture_loader.apple, pos, 0, texture_loader.apple_scale, WHITE);
+	DrawRectangle(x, y, SCALE, SCALE, APPLE_COLOR);
 }
 
-void draw_score() {
+void draw_score(int score) {
 	char scoreText[80];
 	sprintf(scoreText, "Score: %d", score);
 	DrawText(scoreText, 20, 10, 20, SCORE_COLOR);
 }
 
-void renderer_draw() {
+void renderer_draw(int score) {
 	draw_grid();
 	draw_apple();
 	draw_snake();
-	draw_score();
+	draw_score(score);
 }
 
 #endif // RAY_RENDERER_H

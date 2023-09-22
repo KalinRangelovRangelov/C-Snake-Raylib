@@ -8,7 +8,7 @@
 #include "consts.h"
 #include "ray_texture_loader.h"
 
-#define BACKGROUND_COLOR (Color){ 0xFE, 0xFE, 0xFE, 0xFF }
+#define BACKGROUND_COLOR (Color){ 70, 70, 160, 255 }
 
 void game_handle_input() {
 	if     (IsKeyDown(KEY_W) || IsKeyDown(KEY_UP))	  snake_head->dir = UP;
@@ -23,7 +23,7 @@ int main(void) {
 
 	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Raylib Snake");
 	game.init(GRID_SIZE, SNAKE_SPEED);
-	texture_loader.load();
+	//texture_loader.load();
 	
 	
 	double last_time_frame = GetTime();
@@ -32,9 +32,9 @@ int main(void) {
 			ClearBackground(BACKGROUND_COLOR);
 			game.handle_input();
 			game.update(&last_time_frame, GetTime());
-			renderer.draw(); 	
+			renderer.draw(game.score); 	
 		EndDrawing();
 	}
 	
-	texture_loader.unload();
+	//texture_loader.unload();
 }

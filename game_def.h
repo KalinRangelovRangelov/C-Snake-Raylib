@@ -13,6 +13,7 @@ void game_handle_input();
 typedef struct {
 	int grid_size;
 	float snake_speed;
+	int score;
 
 	void (*init)(int grid_size, float snake_speed);
 	void (*end)();
@@ -30,13 +31,14 @@ Game game = {
 void game_init(int grid_size, float snake_speed) {
 	game.grid_size = grid_size;
 	game.snake_speed = snake_speed;
+	game.score = 0;
 	int center = grid_size / 2;
 	snake_init(center, center, UP);
 	apple_generate(grid_size, grid_size);
 }
 
 void game_end() {
-	score = 0;
+	game.score = 0;
 	snake_release();
 	game.init(game.grid_size, game.snake_speed);
 }
@@ -44,7 +46,9 @@ void game_end() {
 void game_update(double *last_time_frame, double current_time_frame) {
 	if(current_time_frame > *last_time_frame + game.snake_speed) {
 		snake_move();
-		detect_apple(game.grid_size);
+		if(detect_apple(game.grid_size)) {
+			game.score++;
+		}
 		if(detect_collision(game.grid_size)) {
 			game.end();
 		}

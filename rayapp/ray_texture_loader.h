@@ -25,7 +25,7 @@ void texture_loader_load() {
 	Texture2D appleTexture = LoadTextureFromImage(image);          // Image converted to texture, GPU memory (VRAM)
 	UnloadImage(image); 
 	texture_loader.apple = appleTexture;
-	texture_loader.apple_scale = ((float)SCALE - 1.0f) / (float)appleTexture.width;
+	texture_loader.apple_scale = ((float)SCALE + 10) / (float)appleTexture.width;
 }
 
 void texture_loader_unload() {
