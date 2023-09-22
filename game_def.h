@@ -2,6 +2,7 @@
 #define GAME_DEF_H
 
 #include "renderer_def.h"
+#include "particles.h"
 
 void game_init(int grid_size, float snake_speed); 
 void game_end();
@@ -51,7 +52,13 @@ void game_update(double *last_time_frame, double current_time_frame) {
 		snake_move();
 		if(detect_apple(game.grid_size)) {
 			game.score++;
+			size_t x = apple.x * SCALE + GRID_OFFSET;
+			size_t y = apple.y * SCALE + GRID_OFFSET;
+			particles_spawn((Vector2){x, y}, MAX_PARTICLES);
+			snake_grow();
+			apple_generate(game.grid_size, game.grid_size);
 		}
+		particles_party();
 		if(detect_collision(game.grid_size)) {
 			game.end();
 		}

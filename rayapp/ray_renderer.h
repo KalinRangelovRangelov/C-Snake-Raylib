@@ -7,6 +7,7 @@
 #include "../snake.h"
 #include "../consts.h"
 #include "ray_texture_loader.h"
+#include "particles.h"
 
 #define GRID_COLOR LIGHTGRAY
 #define SNAKE_COLOR GREEN
@@ -65,6 +66,7 @@ void renderer_draw(int score, int best_score) {
 	draw_apple();
 	draw_snake();
 	draw_score(score, best_score);
+	particles_draw();
 }
 
 #endif // RAY_RENDERER_H

@@ -171,8 +171,6 @@ void apple_generate(int max_x, int max_y) {
 
 bool detect_apple(int grid_size) {
 	if(snake_detect_apple()) {
-		snake_grow();
-		apple_generate(grid_size, grid_size);
 		return true; 
 	}
 	return false;
