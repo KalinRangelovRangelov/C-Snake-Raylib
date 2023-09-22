@@ -5,11 +5,13 @@
 
 #include "../snake.h"
 #include "../consts.h"
+#include "ray_texture_loader.h"
 
 #define GRID_COLOR LIGHTGRAY
 #define SNAKE_COLOR GREEN
 #define APPLE_COLOR RED
 #define SCORE_COLOR GREEN
+
 
 
 void draw_grid() {
@@ -37,7 +39,10 @@ void draw_snake() {
 }
 
 void draw_apple() {
-	DrawRectangle(apple.x * SCALE + GRID_OFFSET, apple.y * SCALE + GRID_OFFSET, SCALE, SCALE, APPLE_COLOR);
+	int x = apple.x * SCALE + GRID_OFFSET;
+	int y = apple.y * SCALE + GRID_OFFSET;
+	Vector2 pos = {x, y};
+	DrawTextureEx(texture_loader.apple, pos, 0, texture_loader.apple_scale, WHITE);
 }
 
 void draw_score() {
