@@ -1,0 +1,19 @@
+#ifndef CONSTS_H
+#define CONSTS_H
+
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 850
+
+#define GRID_SIZE 20
+#define SCALE SCREEN_WIDTH / GRID_SIZE
+#define START_X 0
+#define START_Y SCREEN_HEIGHT - SCREEN_WIDTH
+
+#define GRID_COLOR GRAY
+#define SNAKE_COLOR LIGHTGRAY
+#define APPLE_COLOR RED
+
+#define SNAKE_SPEED 0.16f
+
+
+#endif // CONSTS_H
