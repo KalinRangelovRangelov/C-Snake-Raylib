@@ -13,6 +13,7 @@
 
 #define GRID_COLOR GRAY
 #define SNAKE_COLOR LIGHTGRAY
+#define APPLE_COLOR RED
 
 #define SNAKE_SPEED 0.2f
 
@@ -48,7 +49,7 @@ void draw_snake() {
 }
 
 void draw_apple() {
-	DrawRectangle(apple.x * SCALE + START_X, apple.y * SCALE + START_Y, SCALE, SCALE, RED);
+	DrawRectangle(apple.x * SCALE + START_X, apple.y * SCALE + START_Y, SCALE, SCALE, APPLE_COLOR);
 }
 
 void draw() {
