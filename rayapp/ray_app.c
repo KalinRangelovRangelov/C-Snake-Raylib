@@ -17,7 +17,6 @@ void game_handle_input() {
 	else if(IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT)) snake_head->dir = RIGHT;
 }
 
-Texture2D appleTextre;
 
 int main(void) {
 
