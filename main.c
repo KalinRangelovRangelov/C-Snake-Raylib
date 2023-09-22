@@ -57,9 +57,6 @@ void game_draw() {
 	draw_score();
 }
 
-
-
-
 void game_handle_input() {
 	if     (IsKeyDown(KEY_W) || IsKeyDown(KEY_UP))	  snake_head->dir = UP;
 	else if(IsKeyDown(KEY_S) || IsKeyDown(KEY_DOWN))  snake_head->dir = DOWN;
@@ -68,7 +65,7 @@ void game_handle_input() {
 }
 
 
-void game_loop() {
+int main(void) {
 	game.init(GRID_SIZE, SNAKE_SPEED);
 	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Raylib Snake");
 	
@@ -76,14 +73,10 @@ void game_loop() {
 	while(!WindowShouldClose()) {
 		BeginDrawing();
 			ClearBackground(RAYWHITE);
-			game_handle_input();
-			game_update(&last_time_frame, GetTime());
-			game_draw(); 			
+			game.handle_input();
+			game.update(&last_time_frame, GetTime());
+			game.draw(); 			
 			
 		EndDrawing();
 	}
-}
-
-int main(void) {
-	game_loop();
 }
