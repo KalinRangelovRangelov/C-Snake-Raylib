@@ -27,7 +27,7 @@ int main(void) {
 			ClearBackground(RAYWHITE);
 			game.handle_input();
 			game.update(&last_time_frame, GetTime());
-			game.draw(); 			
+			renderer.draw(); 			
 			
 		EndDrawing();
 	}
