@@ -7,7 +7,7 @@
 #include "game_def.h"
 #include "consts.h"
 
-#define BACKGROUND_COLOR (Color){ 70, 70, 120, 244 }
+#define BACKGROUND_COLOR (Color){ 70, 70, 160, 255 }
 
 void game_handle_input() {
 	if     (IsKeyDown(KEY_W) || IsKeyDown(KEY_UP))	  snake_head->dir = UP;
