@@ -126,6 +126,7 @@ bool snake_detect_body_collision() {
 		if(track->x == snake_head->x && track->y == snake_head->y) {
 			return true;
 		}
+		track = track->next;
 	}
 	return false;
 }

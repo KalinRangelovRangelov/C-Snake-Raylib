@@ -73,9 +73,9 @@ void detect_collision() {
 	}
 	
 	// Snake collision
-	//if(snake_detect_body_collision()) {
-	//	end_game();
-	//}
+	if(snake_detect_body_collision()) {
+		end_game();
+	}
 }
 
 void update(double *last_time_frame) {
