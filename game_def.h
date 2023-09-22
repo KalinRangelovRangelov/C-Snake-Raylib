@@ -30,7 +30,8 @@ Game game = {
 void game_init(int grid_size, float snake_speed) {
 	game.grid_size = grid_size;
 	game.snake_speed = snake_speed;
-	snake_init(10, 10, UP);
+	int center = grid_size / 2;
+	snake_init(center, center, UP);
 	apple_generate(grid_size, grid_size);
 }
 
