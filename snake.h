@@ -131,9 +131,28 @@ bool snake_detect_body_collision() {
 	return false;
 }
 
+bool is_position_in_snake(int x, int y) {
+	Snake *snake = snake_head;
+	while(snake != NULL) {
+		if(snake->x == x && snake->y == y) {
+			return true;
+		}
+		snake = snake->next;
+	}
+	return false;
+}
+
 void apple_generate(int max_x, int max_y) {
-	apple.x = rand() % max_x;
-	apple.y = rand() % max_y;
+	bool found_valid_position = false;
+	while(!found_valid_position) {
+		int x = rand() % max_x;
+		int y = rand() % max_y;
+		if(!is_position_in_snake(x, y)) {
+			apple.x = x;
+			apple.y = y;
+			found_valid_position = true;
+		}
+	}
 }
 
 

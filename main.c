@@ -15,7 +15,7 @@
 #define SNAKE_COLOR LIGHTGRAY
 #define APPLE_COLOR RED
 
-#define SNAKE_SPEED 0.2f
+#define SNAKE_SPEED 0.16f
 
 void init_game() {
 	snake_init(10, 10, UP);
