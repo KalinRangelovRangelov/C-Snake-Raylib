@@ -35,6 +35,7 @@ void snake_grow();
 bool snake_detect_apple();
 bool snake_detect_body_collision();
 void apple_generate(int max_x, int max_y);
+void detect_apple(int grid_size);
 
 
 void snake_init(int x, int y, DIR dir) {
@@ -120,6 +121,20 @@ bool snake_detect_apple() {
 		   apple.y == snake_head->y;
 }
 
+bool detect_collision(int grid_size) {
+	// Grid collision
+	if(snake_head->x < 0 || snake_head->y < 0  || snake_head->x >= grid_size || snake_head->y >= grid_size) {
+		return true;
+	}
+	
+	// Snake collision
+	if(snake_detect_body_collision()) {
+		return true;
+	}
+	return false;
+}
+
+
 bool snake_detect_body_collision() {
 	Snake *snake = snake_head->next;
 	while(snake != NULL) {
@@ -155,6 +170,12 @@ void apple_generate(int max_x, int max_y) {
 	}
 }
 
-
+void detect_apple(int grid_size) {
+	if(snake_detect_apple()) {
+		snake_grow();
+		apple_generate(grid_size, grid_size);
+		score++;
+	}
+}
 
 #endif // SNAKE_H

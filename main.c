@@ -2,6 +2,7 @@
 #include <raylib.h>
 
 #include "snake.h"
+#include "game_def.h"
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 850
@@ -17,16 +18,7 @@
 
 #define SNAKE_SPEED 0.16f
 
-void init_game() {
-	snake_init(10, 10, UP);
-	apple_generate(GRID_SIZE, GRID_SIZE);
-}
 
-void end_game() {
-	score = 0;
-	snake_release();
-	init_game();
-}
 
 void draw_grid() {
 	for(size_t x = 0; x < SCREEN_WIDTH; ++x) {
@@ -52,43 +44,33 @@ void draw_apple() {
 	DrawRectangle(apple.x * SCALE + START_X, apple.y * SCALE + START_Y, SCALE, SCALE, APPLE_COLOR);
 }
 
-void draw() {
+void draw_score() {
+	char scoreText[80];
+	sprintf(scoreText, "Score: %d", score);
+	DrawText(scoreText, 20, 10, 20, BLACK);
+}
+
+void game_draw() {
 	draw_grid();
 	draw_apple();
 	draw_snake();
+	draw_score();
 }
 
-void detect_apple() {
-	if(snake_detect_apple()) {
-		snake_grow();
-		apple_generate(GRID_SIZE, GRID_SIZE);
-		score++;
-	}
-}
-
-void detect_collision() {
-	// Grid collision
-	if(snake_head->x < 0 || snake_head->y < 0  || snake_head->x >= GRID_SIZE || snake_head->y >= GRID_SIZE) {
-		end_game();
-	}
-	
-	// Snake collision
-	if(snake_detect_body_collision()) {
-		end_game();
-	}
-}
-
-void update(double *last_time_frame) {
+void game_update(double *last_time_frame, double current_time_frame) {
 	double time_frame = GetTime();
-	if(time_frame > *last_time_frame + SNAKE_SPEED) {
+	if(time_frame > *last_time_frame + game.snake_speed) {
 		snake_move();
-		detect_apple();
-		detect_collision();
-		*last_time_frame = time_frame;
+		detect_apple(game.grid_size);
+		if(detect_collision(game.grid_size)) {
+			game_end();
+		}
+		*last_time_frame = current_time_frame;
 	}
 }
 
-void handle_input() {
+
+void game_handle_input() {
 	if     (IsKeyDown(KEY_W) || IsKeyDown(KEY_UP))	  snake_head->dir = UP;
 	else if(IsKeyDown(KEY_S) || IsKeyDown(KEY_DOWN))  snake_head->dir = DOWN;
 	else if(IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT))  snake_head->dir = LEFT;
@@ -96,23 +78,22 @@ void handle_input() {
 }
 
 
-int main(void) {
-	
-	init_game();
-	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "raylib [core] example - basic window");
+void game_loop() {
+	game.init(GRID_SIZE, SNAKE_SPEED);
+	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Raylib Snake");
 	
 	double last_time_frame = GetTime();
 	while(!WindowShouldClose()) {
 		BeginDrawing();
 			ClearBackground(RAYWHITE);
-			char scoreText[80];
-			sprintf(scoreText, "Score: %d", score);
-			DrawText(scoreText, 20, 10, 20, BLACK);
-			
-			draw(); 
-			update(&last_time_frame);
-			handle_input();
+			game_handle_input();
+			game_update(&last_time_frame, GetTime());
+			game_draw(); 			
 			
 		EndDrawing();
 	}
+}
+
+int main(void) {
+	game_loop();
 }
