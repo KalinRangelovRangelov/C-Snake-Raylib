@@ -16,6 +16,9 @@
 #define BEST_SCORE_COLOR YELLOW
 
 
+int get_world_position(int p) {
+	return p * SCALE + GRID_OFFSET;
+}
 
 void draw_grid() {
 	
@@ -33,17 +36,68 @@ void draw_grid() {
 	DrawRectangleLinesEx(frame, 1.5, GRID_COLOR);
 }
 
+void draw_snake_head_at(int x, int y, DIR dir) {
+	int radius		  = SCALE_HALF;
+	int segments	  = 10;
+	int center_x      = x + SCALE_HALF;
+	int center_y 	  = y + SCALE;
+	float start_angle = 270;
+	float end_angle	  = 90;
+	
+	switch(dir) {
+	case UP: 
+		center_x 	= x + SCALE_HALF;
+		center_y 	= y + SCALE;
+		start_angle = 270;
+		end_angle	= 90;
+		break;
+	case DOWN:
+		center_x 	= x + SCALE_HALF;
+		center_y 	= y;
+		start_angle = -90;
+		end_angle 	= 90;
+		break;
+	case LEFT:
+		center_x 	= x + SCALE;
+		center_y 	= y + SCALE_HALF;
+		start_angle = 0;
+		end_angle 	= -180;
+		break;
+	case RIGHT:
+		center_x 	= x;
+		center_y 	= y + SCALE_HALF;
+		start_angle = 0;
+		end_angle 	= 180;
+		break;
+	}
+	
+	Vector2 center 	 = { center_x, center_y };
+	
+	printf("x: %d, y: %d, cx: %d, cy: %d, hc: %d, r: %d\n", x, y, center_x, center_y, SCALE_HALF, radius);
+
+	DrawCircleSector(center, radius, start_angle, end_angle, segments, SCORE_COLOR);
+}
+
 void draw_snake() {
 	Snake *snake = snake_head;
 	while(snake != NULL) {
-		DrawRectangle(snake->x * SCALE + GRID_OFFSET, snake->y * SCALE + GRID_OFFSET, SCALE, SCALE, SNAKE_COLOR);
+		int x = get_world_position(snake->x);
+		int y = get_world_position(snake->y);
+		
+		if(snake == snake_head) {
+			draw_snake_head_at(x, y, snake->dir);
+		}
+		else {
+			DrawRectangle(x, y, SCALE, SCALE, SNAKE_COLOR);
+		}
+		
 		snake = snake->next;
 	}
 }
 
 void draw_apple() {
-	int x = apple.x * SCALE + GRID_OFFSET;
-	int y = apple.y * SCALE + GRID_OFFSET;
+	int x = get_world_position(apple.x);
+	int y = get_world_position(apple.y);
 	//Vector2 pos = {x, y};
 	//DrawTextureEx(texture_loader.apple, pos, 0, texture_loader.apple_scale, WHITE);
 	DrawRectangle(x, y, SCALE, SCALE, APPLE_COLOR);
