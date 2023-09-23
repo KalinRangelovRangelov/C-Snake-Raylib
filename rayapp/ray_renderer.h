@@ -22,21 +22,76 @@ int get_world_position(int p) {
 
 void draw_grid() {
 	
-	/*for(size_t x = 0; x <= GRID_SIZE; x++) {
-		size_t x_scale = x * SCALE + GRID_OFFSET;
-		DrawLine(x_scale, GRID_OFFSET, x_scale, SCREEN_HEIGHT - GRID_OFFSET, GRID_COLOR);
-	}
-
-	for(size_t y = 0; y <= GRID_SIZE; ++y) {
-		size_t y_scale = y * SCALE + GRID_OFFSET;
-		DrawLine(GRID_OFFSET, y_scale, SCREEN_WIDTH - GRID_OFFSET, y_scale, GRID_COLOR);
-	} */
+	//for(size_t x = 0; x <= GRID_SIZE; x++) {
+	//	size_t x_scale = x * SCALE + GRID_OFFSET;
+	//	DrawLine(x_scale, GRID_OFFSET, x_scale, SCREEN_HEIGHT - GRID_OFFSET, GRID_COLOR);
+	//}
+    //
+	//for(size_t y = 0; y <= GRID_SIZE; ++y) {
+	//	size_t y_scale = y * SCALE + GRID_OFFSET;
+	//	DrawLine(GRID_OFFSET, y_scale, SCREEN_WIDTH - GRID_OFFSET, y_scale, GRID_COLOR);
+	//} 
 	
 	Rectangle frame = { GRID_OFFSET, GRID_OFFSET, SCREEN_WIDTH - (2 * GRID_OFFSET), SCREEN_HEIGHT - (2 * GRID_OFFSET) };
 	DrawRectangleLinesEx(frame, 1.5, GRID_COLOR);
 }
 
+void draw_snake_eye_at(int x, int y, DIR dir) {
+	//DIR _dir = RIGHT;
+	
+	// UP
+	int eye_radius = SCALE_QUARTER - 4;
+	int iris_radius = 2;
+	int center_x1 = x + SCALE_QUARTER + 2;
+	int center_y1 = y + SCALE_HALF + SCALE_QUARTER;
+	int center_x2 = center_x1 + SCALE_HALF - 2;
+	int center_y2 = center_y1; 
+	int iris_center_x1 = center_x1;
+	int iris_center_y1 = center_y1 - 1.5;
+	int iris_center_x2 = center_x2;
+	int iris_center_y2 = center_y2 - 1.5;
+	
+	if(dir == LEFT) {
+		center_x1 = x + SCALE_HALF + SCALE_QUARTER; 
+		center_y1 = y + SCALE_QUARTER + 2;
+		center_x2 = center_x1;
+		center_y2 = center_y1 + SCALE_HALF - 2; 
+		iris_center_x1 = center_x1 - 1.5;
+		iris_center_y1 = center_y1;
+		iris_center_x2 = center_x2 - 1.5;
+		iris_center_y2 = center_y2;
+	}
+	else if(dir == DOWN) {
+		center_x1 = x + SCALE_QUARTER + 2; 
+		center_y1 = y + SCALE_QUARTER;
+		center_x2 = center_x1 + SCALE_HALF - 2;
+		center_y2 = center_y1;
+		iris_center_x1 = center_x1;
+		iris_center_y1 = center_y1 + 1.5;
+		iris_center_x2 = center_x2;
+		iris_center_y2 = center_y2 + 1.5;
+	}
+	else if(dir == RIGHT) {
+		center_x1 = x + SCALE_QUARTER + 2; 
+		center_y1 = y + SCALE_QUARTER;
+		center_x2 = center_x1;
+		center_y2 = center_y1 + SCALE_HALF;
+		iris_center_x1 = center_x1 + 1.5;
+		iris_center_y1 = center_y1;
+		iris_center_x2 = center_x2 + 1.5;
+		iris_center_y2 = center_y2;
+	}
+	
+	DrawCircle(center_x1, center_y1, eye_radius, WHITE);
+	DrawCircle(center_x2, center_y2, eye_radius, WHITE);
+	
+	DrawCircle(iris_center_x1, iris_center_y1, iris_radius, BLACK);
+	DrawCircle(iris_center_x2, iris_center_y2, iris_radius, BLACK);
+	
+}
+
 void draw_snake_head_at(int x, int y, DIR dir) {
+	//DIR _dir = RIGHT;
 	int radius		  = SCALE_HALF;
 	int segments	  = 10;
 	int center_x      = x + SCALE_HALF;
@@ -72,10 +127,8 @@ void draw_snake_head_at(int x, int y, DIR dir) {
 	}
 	
 	Vector2 center 	 = { center_x, center_y };
-	
-	printf("x: %d, y: %d, cx: %d, cy: %d, hc: %d, r: %d\n", x, y, center_x, center_y, SCALE_HALF, radius);
-
 	DrawCircleSector(center, radius, start_angle, end_angle, segments, SCORE_COLOR);
+	draw_snake_eye_at(x, y, dir);
 }
 
 void draw_snake() {
