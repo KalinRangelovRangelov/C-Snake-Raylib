@@ -8,7 +8,7 @@
 #include "consts.h"
 #include "ray_texture_loader.h"
 
-#define BACKGROUND_COLOR (Color){ 70, 70, 160, 255 }
+#define BACKGROUND_COLOR (Color) { 47, 100, 171, 255 }
 
 void game_handle_input() {
 	if     (IsKeyDown(KEY_W) || IsKeyDown(KEY_UP))	  snake_head->dir = UP;

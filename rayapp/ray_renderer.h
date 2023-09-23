@@ -10,9 +10,9 @@
 #include "particles.h"
 
 #define GRID_COLOR LIGHTGRAY
-#define SNAKE_COLOR GREEN
-#define APPLE_COLOR RED
-#define SCORE_COLOR GREEN
+#define SNAKE_COLOR (Color) { 98, 231, 60, 255 } // GREEN
+#define APPLE_COLOR (Color) { 217, 56, 51, 255 } // RED
+#define SCORE_COLOR SNAKE_COLOR
 #define BEST_SCORE_COLOR YELLOW
 
 
