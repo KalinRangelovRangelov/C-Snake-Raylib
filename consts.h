@@ -10,7 +10,7 @@
 #define SCALE_HALF (SCALE / 2)
 
 
-#define SNAKE_SPEED 0.16f
+#define SNAKE_SPEED 0.10f
 
 
 #endif // CONSTS_H

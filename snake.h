@@ -33,6 +33,7 @@ void snake_move();
 void snake_grow();
 bool snake_detect_apple();
 bool snake_detect_body_collision();
+void snake_automotion(int grid_size);
 void apple_generate(int max_x, int max_y);
 bool detect_apple(int grid_size);
 
@@ -133,7 +134,6 @@ bool detect_collision(int grid_size) {
 	return false;
 }
 
-
 bool snake_detect_body_collision() {
 	Snake *snake = snake_head->next;
 	while(snake != NULL) {
@@ -143,6 +143,125 @@ bool snake_detect_body_collision() {
 		snake = snake->next;
 	}
 	return false;
+}
+
+void snake_turn_left() {
+	switch(snake_head->dir) {
+	case UP:	snake_head->dir = LEFT; break;
+	case DOWN: 	snake_head->dir = RIGHT; break;
+	case LEFT:	snake_head->dir = DOWN; break; 
+	case RIGHT:	snake_head->dir = UP; break;
+	}
+}
+
+void snake_turn_right() {
+	switch(snake_head->dir) {
+	case UP:	snake_head->dir = RIGHT; break;
+	case DOWN: 	snake_head->dir = LEFT; break;
+	case LEFT:	snake_head->dir = UP; break; 
+	case RIGHT:	snake_head->dir = DOWN; break;
+	}
+}
+
+// maybe monte carlo next 4 moves ( 81 turns)
+// 				  or next 5 moves (243 truns)
+int evaluate_position_in_grid_in_respect_to_apple(int x, int y, int grid_size) {
+	int reward = 0;
+	
+	// Crash in grid
+	if(x < 0 || x > grid_size - 1 || y < 0 || y > grid_size - 1) {
+		reward -= 100;
+	}
+	
+	// X or Y same as apple
+	if(x == apple.x) {
+		reward += 50;
+	}
+	if(y == apple.y) {
+		reward += 50;
+	}
+	
+	// Near X and Y
+	int old_dx = abs(snake_head->x - apple.x);
+	int old_dy = abs(snake_head->y - apple.y);
+	int new_dx = abs(x - apple.x);
+	int new_dy = abs(y - apple.y);
+	if(new_dx < old_dx) {
+		reward += 5;
+	}
+	if(new_dy < old_dy) {
+		reward += 5;
+	}
+	
+	// Crash in self
+	Snake *snake = snake_head;
+	while(snake != NULL) {
+		if(x == snake->x && y == snake->y) {
+			reward -= 100;
+		}
+		
+		snake = snake->next;
+	}
+	
+	return reward;
+}
+
+int snake_evaluate_forward(int grid_size) {
+	int x = snake_head->x;
+	int y = snake_head->y;
+	
+	switch(snake_head->dir) {
+		case UP:	--y; break;
+		case DOWN:	++y; break;
+		case LEFT:	--x; break; 
+		case RIGHT:	++x; break;
+	}
+	
+	return evaluate_position_in_grid_in_respect_to_apple(x, y, grid_size);
+}
+
+int snake_evaluate_left(int grid_size) {
+	int x = snake_head->x;
+	int y = snake_head->y;
+	
+	switch(snake_head->dir) {
+		case UP:	--x; break;
+		case DOWN:	++x; break;
+		case LEFT:	++y; break; 
+		case RIGHT:	--y; break;
+	}
+	
+	return evaluate_position_in_grid_in_respect_to_apple(x, y, grid_size);
+}
+
+int snake_evaluate_right(int grid_size) {
+	int x = snake_head->x;
+	int y = snake_head->y;
+	
+	switch(snake_head->dir) {
+		case UP:	++x; break;
+		case DOWN:	--x; break;
+		case LEFT:	--y; break; 
+		case RIGHT:	++y; break;
+	}
+	
+	return evaluate_position_in_grid_in_respect_to_apple(x, y, grid_size);
+}
+
+void snake_automotion(int grid_size) {
+	int try_forward = snake_evaluate_forward(grid_size);
+	int try_left	= snake_evaluate_left(grid_size);
+	int try_right	= snake_evaluate_right(grid_size);
+	
+	if(try_forward >= try_left && try_forward >= try_right) {
+		// Keep moving forward
+	}
+	else if(try_left > try_right) {
+		snake_turn_left();
+	}
+	else {
+		snake_turn_right(); 
+	}
 }
 
 bool is_position_in_snake(int x, int y) {

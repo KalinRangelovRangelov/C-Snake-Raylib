@@ -29,6 +29,7 @@ int main(void) {
 	while(!WindowShouldClose()) {
 		BeginDrawing();
 			ClearBackground(BACKGROUND_COLOR);
+			snake_automotion(GRID_SIZE);
 			game.handle_input();
 			game.update(&last_time_frame, GetTime());
 			renderer.draw(game.score, game.best_score); 	
