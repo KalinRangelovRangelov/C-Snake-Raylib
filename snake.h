@@ -113,6 +113,7 @@ void snake_grow() {
 	newSegment->x = save_x; 
 	newSegment->y = save_y; 
 	newSegment->dir = save_dir; 
+	newSegment->next = NULL;
 	snake->next = newSegment;
 }
 
